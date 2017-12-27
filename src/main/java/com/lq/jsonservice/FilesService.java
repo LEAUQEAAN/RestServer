@@ -1,13 +1,9 @@
 package com.lq.jsonservice;
 
-import com.lq.dao.ImageDao;
+import com.lq.dao.FilesDao;
 import com.lq.model.Info;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,8 +11,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -25,24 +19,27 @@ import java.util.Date;
  */
 
 @Component
-@Path("image")
-public class ImageService {
+@Path("files")
+public class FilesService {
 
     @Autowired
-    ImageDao imageDao;
+    FilesDao filesDao;
 
     @GET
-    @Path("/add/{worker_code}/{img}")
+    @Path("/add/{worker_code}/{message_code}/{file_type}/{file_url}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response add(@PathParam("worker_code")  String  worker_code,@PathParam("img")  String  img){
+    public Response add(@PathParam("worker_code") String worker_code,
+                        @PathParam("file_code") String file_code,
+                        @PathParam("message_code") String  message_code,
+                        @PathParam("file_type") String  file_type,
+                        @PathParam("file_url") String  file_url){
         Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String datetime = formatter.format(currentTime);
         SimpleDateFormat formatter1 = new SimpleDateFormat("yyyyMMddHHmmss");
         String code= worker_code+"_"+formatter1.format(currentTime);
-        boolean ok = imageDao.add(code,img);
+        boolean ok = filesDao.add(code,message_code,file_type,file_url,datetime);
         return Response.ok(new Info(ok?"1":"0")).build();
     }
-
-
-
 }
 
