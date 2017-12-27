@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 public interface FilesDao {
 
 
-    @Insert("insert into files (file_code,message_code,file_type,file_url,datetime) values(#{0},#{1},#{2},#{3},#{4})")
-    public boolean add(String file_code,String  message_code,String  file_type,String  file_url,String  datetime);
+    @Insert("insert into files (file_code,message_code,file_type,file_url,datetime,local_url) values(#{0},#{1},#{2},#{3},#{4},#{5})")
+    public boolean add(String file_code,String  message_code,String  file_type,String  file_url,String  datetime,String local_url);
 
         }

@@ -26,20 +26,23 @@ public class FilesService {
     FilesDao filesDao;
 
     @GET
-    @Path("/add/{worker_code}/{message_code}/{file_type}/{file_url}")
+    @Path("/add/{worker_code}/{message_code}/{file_type}/{file_url}/{local_url}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response add(@PathParam("worker_code") String worker_code,
                         @PathParam("file_code") String file_code,
                         @PathParam("message_code") String  message_code,
                         @PathParam("file_type") String  file_type,
-                        @PathParam("file_url") String  file_url){
+                        @PathParam("file_url") String  file_url,
+                        @PathParam("local_url") String  local_url
+    ){
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String datetime = formatter.format(currentTime);
         SimpleDateFormat formatter1 = new SimpleDateFormat("yyyyMMddHHmmss");
         String code= worker_code+"_"+formatter1.format(currentTime);
-        boolean ok = filesDao.add(code,message_code,file_type,file_url,datetime);
+        boolean ok = filesDao.add(code,message_code,file_type,file_url,datetime,local_url);
         return Response.ok(new Info(ok?"1":"0")).build();
+
     }
 }
 
