@@ -53,11 +53,7 @@ public class PolSecService {
 
 
     public List<Scenic> LoadSces() {
-
         return scenicDao.list();
-
-
-
     }
 
     public List<Policeunit> loadplus() {
@@ -89,3 +85,4 @@ public class PolSecService {
        return false;
     }
 }
+
