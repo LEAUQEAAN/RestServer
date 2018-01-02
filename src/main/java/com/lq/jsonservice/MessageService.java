@@ -35,6 +35,12 @@ public class MessageService {
     @Autowired
     RecmsgDao recmsgDao;
 
+    @Autowired
+    FilesDao filesDao;
+
+    @Autowired
+    VoiceDao voiceDao;
+
     /**
      * 添加消息
      * @param worker_code
@@ -60,7 +66,6 @@ public class MessageService {
         return Response.ok(new Info(ok?"1":"0")).build();
     }
 
-
     /**
      * 通过安保人员ID获取安保人员的报警信息
      * @param worker_code
@@ -84,10 +89,61 @@ public class MessageService {
                     boolean ok =  recmsgDao.gotIt(mg.getPolice().getPolice_code(),msg.getMessage_code(),"1");
                 }
             }
+
+           // System.out.println(msg.getMessage_code());
+            List<Files> imgfiles = filesDao.loadByMsgCode(msg.getMessage_code(),"1");
+            mg.setImgfiles(imgfiles);
+            List<Voice> viocefiles = voiceDao.loadByMsgCode(msg.getMessage_code());
+            mg.setVoicefiles(viocefiles);
+            List<Files> VIDfiles = filesDao.loadByMsgCode(msg.getMessage_code(),"3");
+            mg.setVIDfiles(VIDfiles);
+
+            mg.setNumImg(imgfiles.size());
+            mg.setNumVoice(viocefiles.size());
+            mg.setNumVID(VIDfiles.size());
+
             list.add(mg);
         }
         return Response.ok(list).build();
     }
+
+    /**
+     * 获取消息详情
+     * @param msg_code
+     * @return
+     */
+    @GET
+    @Path("/loadById/{msg_code}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response LoadById(@PathParam("msg_code")  String msg_code){
+            Message msg = messageDao.loadById(msg_code);
+
+            MessageInfo mg = new MessageInfo();
+            if(msg==null)  return Response.ok(mg).build();
+            //
+        // System.out.println(msg.getMessage_code());
+
+            mg.setMessage(msg);
+            mg.setWorker(workerDao.loadById(msg.getWorker_code()));
+            mg.setPolice(policeDao.loadByMsg(msg.getMessage_code(),"1"));
+            //System.out.println(msg.getMessage_code());
+        List<Files> imgfiles = filesDao.loadByMsgCode(msg.getMessage_code(),"1");
+        mg.setImgfiles(imgfiles);
+        List<Voice> viocefiles = voiceDao.loadByMsgCode(msg.getMessage_code());
+        mg.setVoicefiles(viocefiles);
+        List<Files> VIDfiles = filesDao.loadByMsgCode(msg.getMessage_code(),"3");
+        mg.setVIDfiles(VIDfiles);
+
+        mg.setNumImg(imgfiles.size());
+        mg.setNumVoice(viocefiles.size());
+        mg.setNumVID(VIDfiles.size());
+
+        return Response.ok(mg).build();
+    }
+
+
+
+
 
 
 
@@ -115,6 +171,18 @@ public class MessageService {
             info.setMessage(msg);
             info.setPolice(policeDao.loadByMsg(msg.getMessage_code(),"1"));
             info.setWorker(workerDao.loadById(msg.getWorker_code()));
+
+            List<Files> imgfiles = filesDao.loadByMsgCode(msg.getMessage_code(),"1");
+            info.setImgfiles(imgfiles);
+            List<Voice> viocefiles = voiceDao.loadByMsgCode(msg.getMessage_code());
+            info.setVoicefiles(viocefiles);
+            List<Files> VIDfiles = filesDao.loadByMsgCode(msg.getMessage_code(),"3");
+            info.setVIDfiles(VIDfiles);
+
+            info.setNumImg(imgfiles.size());
+            info.setNumVoice(viocefiles.size());
+            info.setNumVID(VIDfiles.size());
+
             msginfos.add(info);
         }
         return Response.ok(msginfos).build();
@@ -144,6 +212,25 @@ public class MessageService {
         }
         return Response.ok(new Info(newcount+"")).build();
     }
+
+
+
+
+    @GET
+    @Path("/appendtext/{message_code}/{addtext}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response appendText(@PathParam("message_code")  String message_code ,@PathParam("addtext")  String addtext){
+        Message message = messageDao.loadById(message_code);
+        addtext = message.getMessage_note()+" "+ addtext;
+
+        boolean ok = messageDao.appendText(message_code,addtext);
+        return Response.ok(new Info(ok ? "1":"0")).build();
+    }
+
+
+
+
+
 
 
 

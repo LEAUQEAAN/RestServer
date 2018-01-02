@@ -8,20 +8,24 @@ public class Files{
     private String  file_code ;
     private String  message_code;
     private String file_type;
-    private String datetime;
     private String file_url;
+    private String datetime;
     private String local_url;
+    private String file_name;
+    private String file_status;
 
     public Files() {
     }
 
-    public Files(String file_code, String message_code, String file_type, String datetime, String file_url, String local_url) {
+    public Files(String file_code, String message_code, String file_type, String file_url, String datetime, String local_url, String file_name, String file_status) {
         this.file_code = file_code;
         this.message_code = message_code;
         this.file_type = file_type;
-        this.datetime = datetime;
         this.file_url = file_url;
+        this.datetime = datetime;
         this.local_url = local_url;
+        this.file_name = file_name;
+        this.file_status = file_status;
     }
 
     public String getFile_code() {
@@ -48,20 +52,20 @@ public class Files{
         this.file_type = file_type;
     }
 
-    public String getDatetime() {
-        return datetime;
-    }
-
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
-    }
-
     public String getFile_url() {
         return file_url;
     }
 
     public void setFile_url(String file_url) {
         this.file_url = file_url;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
     public String getLocal_url() {
@@ -72,15 +76,33 @@ public class Files{
         this.local_url = local_url;
     }
 
+    public String getFile_name() {
+        return file_name;
+    }
+
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
+    }
+
+    public String getFile_status() {
+        return file_status;
+    }
+
+    public void setFile_status(String file_status) {
+        this.file_status = file_status;
+    }
+
     @Override
     public String toString() {
         return "Files{" +
                 "file_code='" + file_code + '\'' +
                 ", message_code='" + message_code + '\'' +
                 ", file_type='" + file_type + '\'' +
-                ", datetime='" + datetime + '\'' +
                 ", file_url='" + file_url + '\'' +
+                ", datetime='" + datetime + '\'' +
                 ", local_url='" + local_url + '\'' +
+                ", file_name='" + file_name + '\'' +
+                ", file_status='" + file_status + '\'' +
                 '}';
     }
 }

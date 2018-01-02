@@ -13,6 +13,8 @@ public class WorkerInfo implements Serializable{
     private  Worker worker;
     private  Scenic scenic;
 
+
+
     public WorkerInfo() {
     }
 

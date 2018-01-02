@@ -38,7 +38,7 @@ public class WorkerService {
 
         Worker w = workerDao.loadById(code);
 
-        return w != null ? Response.ok(w).build():Response.ok(new Worker("-1","","","","","","")).build() ;
+        return w != null ? Response.ok(w).build():Response.ok(new Worker("-1","","","","","","","","")).build() ;
     }
 
     /**
@@ -84,7 +84,7 @@ public class WorkerService {
 
             return Response.ok(new Info("添加成功！")).build();
         }else{
-            System.out.println("222");
+           // System.out.println("222");
             return Response.ok(new Info("添加失败！")).build();
         }
     }
@@ -116,7 +116,7 @@ public class WorkerService {
         if(ok){
             return Response.ok(new Info("注册成功！")).build();
         }else{
-            System.out.println("222");
+          //  System.out.println("222");
             return Response.ok(new Info("注册失败！")).build();
         }
     }
@@ -216,5 +216,31 @@ public class WorkerService {
             return Response.ok(new Info("修改失败！")).build();
         }
     }
+
+    /**
+     * 更新位置信息
+     * @param code
+     * @param lo
+     * @param al
+     * @return
+     */
+    @GET
+    @Path("/updatePos/{code}/{lo}/{al}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePos(
+            @PathParam("code") String code,
+            @PathParam("lo") String lo,
+            @PathParam("al") String al
+    ){
+        boolean ok = workerDao.updatePos(code,lo,al);
+        if(ok){
+            return Response.ok(new Info("更新成功！")).build();
+        }else{
+            return Response.ok(new Info("更新失败！")).build();
+        }
+    }
+
+
+
 
 }

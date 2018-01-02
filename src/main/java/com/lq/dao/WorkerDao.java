@@ -54,6 +54,11 @@ public interface WorkerDao {
     @Update("update worker set worker_pwd = #{1} where worker_code = #{0}")
     boolean alterpwd(String worker_code, String newpwd);
 
+
+    @Update("update worker set worker_lo = #{1},worker_al = #{2} where worker_code = #{0}")
+    boolean updatePos(String worker_code, String worker_lo, String worker_al);
+
+
     @Update("update worker " +
             " set worker_name=#{worker_name},"
             + " worker_phone=#{worker_phone},"

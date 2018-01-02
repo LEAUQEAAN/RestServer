@@ -259,6 +259,9 @@
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
       </resource>
     </resources>
 

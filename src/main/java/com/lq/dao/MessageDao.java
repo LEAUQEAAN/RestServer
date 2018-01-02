@@ -4,6 +4,7 @@ import com.lq.model.Message;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -31,4 +32,9 @@ public interface MessageDao {
             ") ORDER BY MESSAGE_TIME desc)  where rownum < 5 ORDER BY MESSAGE_TIME asc")
     List<Message> plist(String dept);
 
+    @Select("select * from MESSAGE where MESSAGE_CODE  = #{0}")
+    Message loadById(String msg_code);
+
+    @Update("update MESSAGE set message_note = #{1} where message_code = #{0} ")
+    boolean appendText(String usercode, String addtext);
 }

@@ -86,7 +86,7 @@ public class PoliceService {
 
             return Response.ok(new Info("添加成功！")).build();
         }else{
-            System.out.println("222");
+            //System.out.println("222");
             return Response.ok(new Info("添加失败！")).build();
         }
     }
@@ -118,7 +118,7 @@ public class PoliceService {
         if(ok){
             return Response.ok(new Info("注册成功！")).build();
         }else{
-            System.out.println("222");
+          //  System.out.println("222");
             return Response.ok(new Info("注册失败！")).build();
         }
 

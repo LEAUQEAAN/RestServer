@@ -48,18 +48,13 @@ public class RecnsgService {
 
         List<Recmsg> recs =  recmsgDao.loadByWkcode(worker_code);
         int n = 0 ;
-        System.out.println(recs);
+        //System.out.println(recs);
         for (Recmsg r:recs ) {
-            System.out.println(r);
+            //System.out.println(r);
             if(r.getRecmsg_status().equals("1") && r.getRecmsg_wkstatus().equals("0")){
                  n++;
             }
         }
         return Response.ok(new Info(n+"")).build();
     }
-
-
-
-
-
 }
